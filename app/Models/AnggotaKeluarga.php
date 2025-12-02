@@ -10,8 +10,11 @@ class AnggotaKeluarga extends Model
     use HasFactory;
 
     protected $table = 'anggota_keluarga';
+
     protected $primaryKey = 'anggota_id';
+
     public $incrementing = true;
+
     public $timestamps = true;
 
     protected $fillable = [
@@ -26,5 +29,3 @@ class AnggotaKeluarga extends Model
         'hubungan' => 'string',
     ];
 }
-
-

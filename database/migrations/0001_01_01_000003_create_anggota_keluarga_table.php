@@ -19,11 +19,11 @@ return new class extends Migration
             $table->index('kk_id');
             $table->index('warga_id');
             $table->index('hubungan');
-            
+
             // Foreign key constraints (akan aktif setelah tabel terkait dibuat)
             // $table->foreign('kk_id')->references('kk_id')->on('keluarga_kk')->onDelete('cascade');
             // $table->foreign('warga_id')->references('warga_id')->on('warga')->onDelete('cascade');
-            
+
             // Unique constraint untuk mencegah duplikasi anggota dalam keluarga yang sama
             $table->unique(['kk_id', 'warga_id'], 'unique_anggota_keluarga');
         });
@@ -34,5 +34,3 @@ return new class extends Migration
         Schema::dropIfExists('anggota_keluarga');
     }
 };
-
-

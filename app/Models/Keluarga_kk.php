@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Keluarga_kk extends Model
 {
+    use HasFactory;
+
     protected $table = 'keluarga_kk';
-    protected $primaryKey ='kk_id';
+
+    protected $primaryKey = 'kk_id';
+
     protected $fillable = [
         'kk_nomor',
         'kepala_keluarga_warga_id',
@@ -15,4 +20,13 @@ class Keluarga_kk extends Model
         'rt',
         'rw',
     ];
+
+    protected $casts = [
+        'kepala_keluarga_warga_id' => 'integer',
+    ];
+
+    public function kepalaKeluarga()
+    {
+        return $this->belongsTo(Warga::class, 'kepala_keluarga_warga_id');
+    }
 }

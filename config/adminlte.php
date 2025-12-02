@@ -319,19 +319,19 @@ return [
         // PRODUCTS :
         [
             'text' => 'Management Products',
-            'url'  => '/products',
+            'url' => '/products',
             'icon' => 'fas fa-box',
         ],
 
         [
             'text' => 'Data Warga',
-            'url'  => '/warga',
+            'url' => '/warga',
             'icon' => 'fas fa-fw fa-user',
         ],
 
         [
             'text' => 'Data Keluarga',
-            'url'  => '/keluarga_kk',
+            'url' => '/keluarga_kk',
             'icon' => 'fas fa-fw fa-user',
         ],
 

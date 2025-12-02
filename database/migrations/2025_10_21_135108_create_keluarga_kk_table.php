@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('keluarga_kk', function (Blueprint $table) {
-        $table->increments('kk_id'); //primary key
-        $table->string('kk_nomor', 100)->unique; 
-        $table->unsignedBigInteger('kepala_keluarga_warga_id')->nullable(); //fk belum aktif
-        $table->string('alamat', 120)->nullable();
-        $table->string('rt', 5)->nullable();
-        $table->string('rw', 120)->nullable();
-        $table->timestamps();
+            $table->increments('kk_id');
+            $table->string('kk_nomor', 100)->unique();
+            $table->foreignId('kepala_keluarga_warga_id')
+                ->nullable()
+                ->constrained('warga')
+                ->nullOnDelete();
+            $table->string('alamat', 255);
+            $table->string('rt', 5)->nullable();
+            $table->string('rw', 5)->nullable();
+            $table->timestamps();
         });
     }
 

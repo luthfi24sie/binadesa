@@ -8,6 +8,9 @@ return new class extends Migration
 {
     public function up()
     {
+        if (Schema::hasTable('warga')) {
+            return;
+        }
         Schema::create('warga', function (Blueprint $table) {
             $table->id();
             $table->string('no_ktp', 16)->unique();

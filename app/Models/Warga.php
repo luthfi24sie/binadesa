@@ -9,8 +9,10 @@ class Warga extends Model
 {
     use HasFactory;
 
-    // Tentukan nama tabel secara eksplisit
     protected $table = 'warga';
+    protected $primaryKey = 'warga_id'; 
+    protected $keyType = 'int';
+    public $timestamps = true;
 
     protected $fillable = [
         'no_ktp',
@@ -19,6 +21,11 @@ class Warga extends Model
         'agama',
         'pekerjaan',
         'telp',
-        'email'
+        'email',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'warga_id';
+    }
 }

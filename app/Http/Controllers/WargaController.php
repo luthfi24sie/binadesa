@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
-  public function index()
-{
-    $warga = Warga::orderBy('id', 'desc')->paginate(10); // ganti warga_id jadi id
-    return view('warga.index', compact('warga'));
-}
-
+    public function index()
+    {
+        // Ganti 'id' menjadi 'warga_id'
+        $warga = Warga::orderBy('warga_id', 'desc')->paginate(10);
+        return view('warga.index', compact('warga'));
+    }
 
     public function create()
     {
@@ -31,14 +31,10 @@ class WargaController extends Controller
             'email' => 'nullable|email',
         ]);
 
-        // Debug data request
-        // dd($request->all());
-
         Warga::create($request->all());
 
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil ditambahkan');
     }
-
 
     public function show(Warga $warga)
     {
@@ -51,15 +47,16 @@ class WargaController extends Controller
     }
 
     public function update(Request $request, Warga $warga)
-{
-    $request->validate([
-        'no_ktp' => 'required|unique:warga,no_ktp,' . $warga->id . ',id', // ganti warga_id jadi id
-        // ... validasi lainnya
-    ]);
+    {
+        $request->validate([
+            // GANTI: $warga->id
+            // JADI:   $warga->warga_id
+            'no_ktp' => 'required|unique:warga,no_ktp,' . $warga->warga_id . ',warga_id',
+        ]);
 
-    $warga->update($request->all());
-    return redirect()->route('warga.index')->with('success', 'Data warga berhasil diperbarui');
-}
+        $warga->update($request->all());
+        return redirect()->route('warga.index')->with('success', 'Data warga berhasil diperbarui');
+    }
 
     public function destroy(Warga $warga)
     {
@@ -67,3 +64,4 @@ class WargaController extends Controller
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil dihapus');
     }
 }
+

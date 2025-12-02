@@ -10,19 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('warga', function (Blueprint $table) {
-        $table->id(); // Ganti menjadi id() saja
-        $table->string('no_ktp')->unique();
-        $table->string('nama');
-        $table->enum('jenis_kelamin', ['L', 'P']);
-        $table->string('agama')->nullable();
-        $table->string('pekerjaan')->nullable();
-        $table->string('telp')->nullable();
-        $table->string('email')->nullable();
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('warga', function (Blueprint $table) {
+            $table->id(); // Ganti menjadi id() saja
+            $table->string('no_ktp')->unique();
+            $table->string('nama');
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('agama')->nullable();
+            $table->string('pekerjaan')->nullable();
+            $table->string('telp')->nullable();
+            $table->string('email')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

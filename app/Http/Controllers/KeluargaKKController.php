@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Keluarga_kk;
+use Illuminate\Http\Request;
 
 class KeluargaKKController extends Controller
 {
@@ -12,7 +12,8 @@ class KeluargaKKController extends Controller
      */
     public function index()
     {
-         $data['dataKeluarga_kk'] = Keluarga_kk::all();
+        $data['dataKeluarga_kk'] = Keluarga_kk::all();
+
         return view('admin.keluarga_kk.index', $data);
     }
 
@@ -53,7 +54,8 @@ class KeluargaKKController extends Controller
      */
     public function edit(string $id)
     {
-         $data['dataKeluarga_kk'] = Keluarga_kk::findOrFail($id);
+        $data['dataKeluarga_kk'] = Keluarga_kk::findOrFail($id);
+
         return view('admin.keluarga_kk.edit', $data);
     }
 
@@ -62,17 +64,17 @@ class KeluargaKKController extends Controller
      */
     public function update(Request $request, string $id)
     {
-       $keluarga = Keluarga_kk::findOrFail($id);
+        $keluarga = Keluarga_kk::findOrFail($id);
 
-    $keluarga->kk_nomor = $request->kk_nomor;
-    $keluarga->kepala_keluarga_warga_id = $request->kepala_keluarga_warga_id;
-    $keluarga->alamat = $request->alamat;
-    $keluarga->rt = $request->rt;
-    $keluarga->rw = $request->rw;
+        $keluarga->kk_nomor = $request->kk_nomor;
+        $keluarga->kepala_keluarga_warga_id = $request->kepala_keluarga_warga_id;
+        $keluarga->alamat = $request->alamat;
+        $keluarga->rt = $request->rt;
+        $keluarga->rw = $request->rw;
 
-    $keluarga->save();
+        $keluarga->save();
 
-    return redirect()->route('keluarga_kk.index')->with('success','Perubahan Data Berhasil!');
+        return redirect()->route('keluarga_kk.index')->with('success', 'Perubahan Data Berhasil!');
     }
 
     /**
@@ -80,9 +82,10 @@ class KeluargaKKController extends Controller
      */
     public function destroy(string $id)
     {
-    $keluarga = Keluarga_kk::findOrFail($id);
-    $keluarga->delete();
-    return redirect()->route('keluarga_kk.index')->with('success', 'Data berhasil dihapus');
+        $keluarga = Keluarga_kk::findOrFail($id);
+        $keluarga->delete();
+
+        return redirect()->route('keluarga_kk.index')->with('success', 'Data berhasil dihapus');
 
     }
 }

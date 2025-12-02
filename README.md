@@ -59,3 +59,34 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Project Setup (Laragon & MySQL)
+
+1. Buka Laragon dan jalankan Apache + MySQL.
+2. Buat database kosong sesuai kebutuhan tugas, contoh:
+   ```sql
+   CREATE DATABASE kependudukan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+3. Salin berkas `.env.example` menjadi `.env` lalu atur kredensial:
+   ```
+   DB_DATABASE=kependudukan
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+4. Instal dependensi dan jalankan migrasi:
+   ```bash
+   composer install
+   php artisan key:generate
+   php artisan migrate
+   ```
+5. Jalankan pengembangan lokal:
+   ```bash
+   php artisan serve
+   ```
+
+## Modul Kependudukan
+
+- Guest area kini menggunakan **Argon Dashboard Tailwind** (free template di [ThemeWagon](https://themewagon.com/themes/argon-dashboard-tailwind/)) lengkap dengan sidebar modern, hero card, statistik, timeline, dan chart.
+- Halaman CRUD `keluarga_kk` disesuaikan agar seragam dengan template (Tailwind UI, badge status kepala keluarga, tombol aksi modern).
+- Fitur wajib: Redirect setelah aksi, server-side validation (+ repopulate `old()`), flash success/error, pagination tailwind.
+- Skema tabel mengikuti ketentuan dosen: `keluarga_kk`, `anggota_keluarga`, `peristiwa_kelahiran`, `peristiwa_kematian`, `peristiwa_pindah`, dan `warga`.
