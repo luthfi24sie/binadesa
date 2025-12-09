@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Wrapper agar perintah `php artisan ...` bisa dijalankan
+ * langsung dari folder luar (Project-Framework-2SIE-Kelompok10).
+ */
+
+$projectPath = __DIR__ . DIRECTORY_SEPARATOR . 'Project-Framework-Kelompok10';
+
+if (! is_dir($projectPath) || ! file_exists($projectPath . DIRECTORY_SEPARATOR . 'artisan')) {
+    fwrite(STDERR, "Laravel project tidak ditemukan di {$projectPath}" . PHP_EOL);
+    exit(1);
+}
+
+chdir($projectPath);
+require $projectPath . DIRECTORY_SEPARATOR . 'artisan';
+
