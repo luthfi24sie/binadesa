@@ -82,14 +82,26 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <span class="px-3 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full">Guest Role</span>
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm text-slate-600 text-right leading-tight">
-                            Guest User<br>
-                            <span class="text-xs text-slate-400">Pengelola KK</span>
-                        </span>
-                        <img src="{{ asset('assets-admin-volt/img/team-3.jpg') }}" class="w-10 h-10 rounded-full border-2 border-white shadow" alt="avatar">
-                    </div>
+                    @auth
+                        <div class="relative">
+                            <button id="userMenuBtn" class="flex items-center gap-2">
+                                <img src="{{ auth()->user()->profile_photo ? asset('storage/'.auth()->user()->profile_photo) : asset('assets-admin-volt/img/team-3.jpg') }}" class="w-10 h-10 rounded-full border-2 border-white shadow" alt="avatar">
+                                <span class="hidden md:block text-sm text-slate-600">{{ auth()->user()->name }}</span>
+                            </button>
+                            <div id="userMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 hidden">
+                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">My Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Messages</a>
+                                <div class="px-4 py-2 text-xs text-slate-400">{{ now()->format('Y-m-d H:i:s') }}</div>
+                                <form method="post" action="{{ route('logout') }}" class="border-t border-slate-100">
+                                    @csrf
+                                    <button class="w-full text-left px-4 py-2 text-sm text-rose-600 hover:bg-rose-50">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="px-4 py-2 bg-argon text-white rounded-lg">Sign In</a>
+                    @endauth
                 </div>
             </nav>
             <main class="p-4 md:p-8 space-y-4">
@@ -141,6 +153,13 @@
 
         openBtn?.addEventListener('click', () => toggleNav(true));
         closeBtn?.addEventListener('click', () => toggleNav(false));
+
+        const btn = document.getElementById('userMenuBtn');
+        const menu = document.getElementById('userMenu');
+        btn?.addEventListener('click', () => {
+            if (!menu) return;
+            menu.classList.toggle('hidden');
+        });
     });
 </script>
 @stack('scripts')

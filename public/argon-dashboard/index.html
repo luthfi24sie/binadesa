@@ -119,11 +119,20 @@
               <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
               <input type="text" placeholder="Type here..." class="ml-2 w-full outline-none text-sm text-gray-700" />
             </div>
-            <a href="#" class="hidden md:inline text-sm text-argon hover:underline">Sign In</a>
+            <a href="/login" class="hidden md:inline text-sm text-argon hover:underline">Sign In</a>
             <button id="hamburger-right" class="w-10 h-10 rounded-lg bg-gray-100 text-gray-700 flex items-center justify-center hover:bg-gray-200 transition"><i class="fa-solid fa-bars"></i></button>
-            <button class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center hover:ring-2 hover:ring-argon transition">
-              <i class="fa-solid fa-user text-gray-600"></i>
-            </button>
+            <div class="relative">
+              <button id="profileMenuBtn" class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center hover:ring-2 hover:ring-argon transition">
+                <i class="fa-solid fa-user text-gray-600"></i>
+              </button>
+              <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 hidden">
+                <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Settings</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Messages</a>
+                <div class="px-4 py-2 text-xs text-gray-400" id="menuTime"></div>
+                <a href="/login" class="block px-4 py-2 text-sm text-rose-600 hover:bg-rose-50">Logout</a>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -351,6 +360,9 @@
     const overlay = document.getElementById('overlay');
     const btn = document.getElementById('hamburger');
     const btnRight = document.getElementById('hamburger-right');
+    const profileMenuBtn = document.getElementById('profileMenuBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const menuTime = document.getElementById('menuTime');
     if (btn) {
       btn.addEventListener('click', () => {
         sidebar.classList.remove('hidden');
@@ -372,6 +384,15 @@
         overlay.classList.add('hidden');
       });
     }
+    profileMenuBtn?.addEventListener('click', () => {
+      if (!profileMenu) return;
+      profileMenu.classList.toggle('hidden');
+      if (menuTime) {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        menuTime.textContent = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      }
+    });
   </script>
 </body>
 </html>
