@@ -1,233 +1,192 @@
-@extends('layouts.admin.app')
-
-@section('title', 'Dashboard')
-
-@section('content')
-
-<!-- row 1 -->
-<div class="flex flex-wrap -mx-3">
-  <!-- card1 -->
-  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-      <div class="flex-auto p-4">
-        <div class="flex flex-row -mx-3">
-          <div class="flex-none w-2/3 max-w-full px-3">
-            <div>
-              <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Total Warga</p>
-              <h5 class="mb-2 font-bold dark:text-white">{{ \App\Models\Warga::count() }}</h5>
-              <p class="mb-0 dark:text-white dark:opacity-60">
-                <span class="text-sm font-bold leading-normal text-emerald-500">Active</span>
-                warga terdaftar
-              </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistem Kependudukan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .main-content {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .stat-card-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .stat-card-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar p-3">
+                    <div class="text-center mb-4">
+                        <h4 class="text-white"><i class="fas fa-users"></i> Kependudukan</h4>
+                        <small class="text-white-50">Sistem Data Penduduk</small>
+                    </div>
+                    
+                    <nav class="nav flex-column">
+                        <a href="{{ route('dashboard') }}" class="nav-link active">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                        <a href="{{ route('warga.index') }}" class="nav-link">
+                            <i class="fas fa-user me-2"></i> Data Warga
+                        </a>
+                        <a href="{{ route('anggota-keluarga.index') }}" class="nav-link">
+                            <i class="fas fa-users me-2"></i> Anggota Keluarga
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-home me-2"></i> Keluarga KK
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-baby me-2"></i> Kelahiran
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-cross me-2"></i> Kematian
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-truck me-2"></i> Pindah
+                        </a>
+                    </nav>
+                </div>
             </div>
-          </div>
-          <div class="px-3 text-right basis-1/3">
-            <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500">
-              <i class="ni leading-none ni-single-02 text-lg relative top-3.5 text-white"></i>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 px-0">
+                <div class="main-content">
+                    <!-- Top Navbar -->
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="container-fluid">
+                            <h5 class="mb-0">Dashboard</h5>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted me-3">Selamat datang di Sistem Kependudukan</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-user me-1"></i> Admin
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- Content -->
+                    <div class="p-4">
+                        <!-- Stats Cards -->
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card stat-card">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-users fa-2x mb-3"></i>
+                                        <h3 class="mb-1">1,234</h3>
+                                        <p class="mb-0">Total Penduduk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card stat-card-2">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-home fa-2x mb-3"></i>
+                                        <h3 class="mb-1">456</h3>
+                                        <p class="mb-0">Keluarga</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card stat-card-3">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-baby fa-2x mb-3"></i>
+                                        <h3 class="mb-1">89</h3>
+                                        <p class="mb-0">Kelahiran Bulan Ini</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <a href="{{ route('anggota-keluarga.create') }}" class="btn btn-primary w-100">
+                                                    <i class="fas fa-plus me-2"></i>Tambah Anggota
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <button class="btn btn-success w-100">
+                                                    <i class="fas fa-file-export me-2"></i>Export Data
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <button class="btn btn-info w-100">
+                                                    <i class="fas fa-chart-bar me-2"></i>Laporan
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <button class="btn btn-warning w-100">
+                                                    <i class="fas fa-cog me-2"></i>Pengaturan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- card2 -->
-  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-      <div class="flex-auto p-4">
-        <div class="flex flex-row -mx-3">
-          <div class="flex-none w-2/3 max-w-full px-3">
-            <div>
-              <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Total Keluarga</p>
-              <h5 class="mb-2 font-bold dark:text-white">{{ \App\Models\Keluarga_kk::count() }}</h5>
-              <p class="mb-0 dark:text-white dark:opacity-60">
-                <span class="text-sm font-bold leading-normal text-emerald-500">Active</span>
-                keluarga terdaftar
-              </p>
-            </div>
-          </div>
-          <div class="px-3 text-right basis-1/3">
-            <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-600 to-orange-600">
-              <i class="ni leading-none ni-single-copy-04 text-lg relative top-3.5 text-white"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- card3 -->
-  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-      <div class="flex-auto p-4">
-        <div class="flex flex-row -mx-3">
-          <div class="flex-none w-2/3 max-w-full px-3">
-            <div>
-              <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Kelahiran Bulan Ini</p>
-              <h5 class="mb-2 font-bold dark:text-white">{{ \App\Models\PeristiwaKelahiran::whereMonth('created_at', now()->month)->count() }}</h5>
-              <p class="mb-0 dark:text-white dark:opacity-60">
-                <span class="text-sm font-bold leading-normal text-emerald-500">This month</span>
-                kelahiran baru
-              </p>
-            </div>
-          </div>
-          <div class="px-3 text-right basis-1/3">
-            <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-emerald-500 to-teal-400">
-              <i class="ni leading-none ni-badge text-lg relative top-3.5 text-white"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- card4 -->
-  <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
-    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-      <div class="flex-auto p-4">
-        <div class="flex flex-row -mx-3">
-          <div class="flex-none w-2/3 max-w-full px-3">
-            <div>
-              <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Kematian Bulan Ini</p>
-              <h5 class="mb-2 font-bold dark:text-white">{{ \App\Models\PeristiwaKematian::whereMonth('created_at', now()->month)->count() }}</h5>
-              <p class="mb-0 dark:text-white dark:opacity-60">
-                <span class="text-sm font-bold leading-normal text-red-600">This month</span>
-                kematian
-              </p>
-            </div>
-          </div>
-          <div class="px-3 text-right basis-1/3">
-            <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500">
-              <i class="ni leading-none ni-fat-remove text-lg relative top-3.5 text-white"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- cards row 2 -->
-<div class="flex flex-wrap mt-6 -mx-3">
-  <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
-    <div class="border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-      <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid p-6 pt-4 pb-0">
-        <h6 class="capitalize dark:text-white">Quick Actions</h6>
-        <p class="mb-0 text-sm leading-normal dark:text-white dark:opacity-60">
-          <i class="fa fa-bolt text-emerald-500"></i>
-          <span class="font-semibold">Quick access</span> to common tasks
-        </p>
-      </div>
-      <div class="flex-auto p-4">
-        <div class="grid grid-cols-2 gap-4">
-          <a href="{{ route('warga.create') }}" class="relative flex flex-col min-w-0 break-words bg-gradient-to-tl from-blue-500 to-violet-500 rounded-2xl bg-clip-border p-4 text-white shadow-lg">
-            <div class="flex items-center">
-              <div class="inline-block w-12 h-12 text-center text-white bg-center shadow-sm fill-current stroke-none bg-white/20 rounded-xl">
-                <i class="ni ni-single-02 text-xl relative top-2"></i>
-              </div>
-              <div class="ml-4">
-                <h6 class="mb-0 text-white font-semibold">Tambah Warga</h6>
-                <p class="text-xs text-white/80">Data warga baru</p>
-              </div>
-            </div>
-          </a>
-          <a href="{{ route('keluarga_kk.create') }}" class="relative flex flex-col min-w-0 break-words bg-gradient-to-tl from-emerald-500 to-teal-400 rounded-2xl bg-clip-border p-4 text-white shadow-lg">
-            <div class="flex items-center">
-              <div class="inline-block w-12 h-12 text-center text-white bg-center shadow-sm fill-current stroke-none bg-white/20 rounded-xl">
-                <i class="ni ni-single-copy-04 text-xl relative top-2"></i>
-              </div>
-              <div class="ml-4">
-                <h6 class="mb-0 text-white font-semibold">Tambah Keluarga</h6>
-                <p class="text-xs text-white/80">Data keluarga baru</p>
-              </div>
-            </div>
-          </a>
-          <a href="{{ route('peristiwa_kelahiran.create') }}" class="relative flex flex-col min-w-0 break-words bg-gradient-to-tl from-cyan-500 to-blue-500 rounded-2xl bg-clip-border p-4 text-white shadow-lg">
-            <div class="flex items-center">
-              <div class="inline-block w-12 h-12 text-center text-white bg-center shadow-sm fill-current stroke-none bg-white/20 rounded-xl">
-                <i class="ni ni-badge text-xl relative top-2"></i>
-              </div>
-              <div class="ml-4">
-                <h6 class="mb-0 text-white font-semibold">Data Kelahiran</h6>
-                <p class="text-xs text-white/80">Catat kelahiran</p>
-              </div>
-            </div>
-          </a>
-          <a href="{{ route('peristiwa_kematian.create') }}" class="relative flex flex-col min-w-0 break-words bg-gradient-to-tl from-orange-500 to-red-500 rounded-2xl bg-clip-border p-4 text-white shadow-lg">
-            <div class="flex items-center">
-              <div class="inline-block w-12 h-12 text-center text-white bg-center shadow-sm fill-current stroke-none bg-white/20 rounded-xl">
-                <i class="ni ni-fat-remove text-xl relative top-2"></i>
-              </div>
-              <div class="ml-4">
-                <h6 class="mb-0 text-white font-semibold">Data Kematian</h6>
-                <p class="text-xs text-white/80">Catat kematian</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
-    <div class="border-black/12.5 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-      <div class="p-4 pb-0 rounded-t-4">
-        <h6 class="mb-0 dark:text-white">Recent Activities</h6>
-      </div>
-      <div class="flex-auto p-4">
-        <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-          <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-t-lg rounded-xl text-inherit">
-            <div class="flex items-center">
-              <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-blue-500 to-violet-500 rounded-xl">
-                <i class="text-white ni ni-single-02 relative top-0.75 text-xxs"></i>
-              </div>
-              <div class="flex flex-col">
-                <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Data Warga</h6>
-                <span class="text-xs leading-tight dark:text-white/80">Total: <span class="font-semibold">{{ \App\Models\Warga::count() }} warga</span></span>
-              </div>
-            </div>
-            <div class="flex">
-              <a href="{{ route('warga.index') }}" class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white">
-                <i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i>
-              </a>
-            </div>
-          </li>
-          <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-xl text-inherit">
-            <div class="flex items-center">
-              <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-emerald-500 to-teal-400 rounded-xl">
-                <i class="text-white ni ni-single-copy-04 relative top-0.75 text-xxs"></i>
-              </div>
-              <div class="flex flex-col">
-                <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Data Keluarga</h6>
-                <span class="text-xs leading-tight dark:text-white/80">Total: <span class="font-semibold">{{ \App\Models\Keluarga_kk::count() }} keluarga</span></span>
-              </div>
-            </div>
-            <div class="flex">
-              <a href="{{ route('keluarga_kk.index') }}" class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white">
-                <i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i>
-              </a>
-            </div>
-          </li>
-          <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-b-lg rounded-xl text-inherit">
-            <div class="flex items-center">
-              <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-cyan-500 to-blue-500 rounded-xl">
-                <i class="text-white ni ni-badge relative top-0.75 text-xxs"></i>
-              </div>
-              <div class="flex flex-col">
-                <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Data Kelahiran</h6>
-                <span class="text-xs leading-tight dark:text-white/80">Total: <span class="font-semibold">{{ \App\Models\PeristiwaKelahiran::count() }} kelahiran</span></span>
-              </div>
-            </div>
-            <div class="flex">
-              <a href="{{ route('peristiwa_kelahiran.index') }}" class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white">
-                <i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i>
-              </a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-@endsection
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

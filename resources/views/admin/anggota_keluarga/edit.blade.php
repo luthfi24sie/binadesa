@@ -10,7 +10,11 @@
 
     <div class="bg-white shadow-xl rounded-2xl p-6">
 
+<<<<<<< HEAD
         <form action="{{ route('anggota-keluarga.update', $anggota) }}" method="POST">
+=======
+        <form action="{{ route('anggota_keluarga.update', $anggota) }}" method="POST">
+>>>>>>> 868c5c2281305549b0c0e6533856867fd3e5cc09
             @csrf
             @method('PUT')
 
