@@ -10,7 +10,7 @@
 
     <div class="bg-white shadow-xl rounded-2xl p-6">
 
-        <form action="{{ route('anggota.update', $anggota) }}" method="POST">
+        <form action="{{ route('anggota-keluarga.update', $anggota) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -19,7 +19,7 @@
                 <div>
                     <label>Kartu Keluarga (KK)</label>
                     <select name="kk_id" class="w-full border p-2 rounded outline-blue-500">
-                        @foreach ($kk as $item)
+                        @foreach ($keluarga as $item)
                             <option value="{{ $item->kk_id }}" 
                                 {{ $anggota->kk_id == $item->kk_id ? 'selected' : '' }}>
                                 {{ $item->kk_nomor }}

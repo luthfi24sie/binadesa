@@ -14,7 +14,7 @@
         <p><strong>Nama Warga:</strong> {{ $anggota->warga->nama }}</p>
         <p><strong>Hubungan:</strong> {{ $anggota->hubungan }}</p>
 
-        <a href="{{ route('anggota.index') }}"
+        <a href="{{ route('anggota-keluarga.index') }}"
            class="mt-6 inline-block bg-gray-500 text-white py-2 px-4 rounded-xl">
             <i class="fa fa-arrow-left"></i> Kembali
         </a>

@@ -39,6 +39,26 @@ class PeristiwaPindahController extends Controller
         return view('admin.peristiwa_pindah.show', compact('data'));
     }
 
+    public function edit($id)
+    {
+        $pindah = PeristiwaPindah::findOrFail($id);
+        $warga = Warga::orderBy('nama')->get();
+        return view('admin.peristiwa_pindah.edit', compact('pindah', 'warga'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'warga_id' => 'required',
+            'tgl_pindah' => 'required',
+        ]);
+
+        $pindah = PeristiwaPindah::findOrFail($id);
+        $pindah->update($request->all());
+
+        return redirect()->route('peristiwa_pindah.index')->with('success', 'Data pindah berhasil diperbarui.');
+    }
+
     public function destroy($id)
     {
         PeristiwaPindah::findOrFail($id)->delete();

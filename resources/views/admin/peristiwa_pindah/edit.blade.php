@@ -10,7 +10,7 @@
 
     <div class="bg-white rounded-2xl shadow-xl p-6">
 
-        <form action="{{ route('pindah.update', $pindah) }}" method="POST">
+        <form action="{{ route('peristiwa_pindah.update', $pindah) }}" method="POST">
             @csrf
             @method('PUT')
 

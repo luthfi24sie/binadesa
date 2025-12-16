@@ -24,6 +24,10 @@ Route::resource('anggota-keluarga', AnggotaKeluargaController::class);
 Route::resource('warga', WargaController::class);
 Route::resource('keluarga_kk', KeluargaKKController::class);
 Route::resource('products', \App\Http\Controllers\ProductController::class);
+Route::resource('peristiwa_kelahiran', \App\Http\Controllers\PeristiwaKelahiranController::class);
+Route::resource('peristiwa_kematian', \App\Http\Controllers\PeristiwaKematianController::class);
+Route::resource('peristiwa_pindah', \App\Http\Controllers\PeristiwaPindahController::class);
+Route::resource('media', \App\Http\Controllers\MediaController::class);
 
 // Auth routes
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');

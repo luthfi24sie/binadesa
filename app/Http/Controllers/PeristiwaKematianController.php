@@ -38,6 +38,26 @@ class PeristiwaKematianController extends Controller
         return view('admin.peristiwa_kematian.show', compact('data'));
     }
 
+    public function edit($id)
+    {
+        $kematian = PeristiwaKematian::findOrFail($id);
+        $warga = Warga::orderBy('nama')->get();
+        return view('admin.peristiwa_kematian.edit', compact('kematian', 'warga'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'warga_id' => 'required',
+            'tgl_meninggal' => 'required',
+        ]);
+
+        $kematian = PeristiwaKematian::findOrFail($id);
+        $kematian->update($request->all());
+
+        return redirect()->route('peristiwa_kematian.index')->with('success', 'Data kematian berhasil diperbarui.');
+    }
+
     public function destroy($id)
     {
         PeristiwaKematian::findOrFail($id)->delete();

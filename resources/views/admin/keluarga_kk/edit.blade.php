@@ -8,35 +8,37 @@
     </div>
 
     <div class="bg-white p-6 rounded-2xl shadow">
-        <form action="{{ route('keluarga_kk.update', $kk) }}" method="POST">
+        <form action="{{ route('keluarga_kk.update', $keluarga) }}" method="POST">
             @csrf @method('PUT')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label>Nomor KK</label>
-                    <input name="kk_nomor" value="{{ old('kk_nomor', $kk->kk_nomor) }}" class="w-full border rounded px-3 py-2" required>
+                    <input name="kk_nomor" value="{{ old('kk_nomor', $keluarga->kk_nomor) }}" class="w-full border rounded px-3 py-2" required>
+                    @error('kk_nomor')<p class="text-red-500 text-sm">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label>Kepala Keluarga</label>
                     <select name="kepala_keluarga_warga_id" class="w-full border rounded px-3 py-2">
                         <option value="">-- Pilih --</option>
                         @foreach($warga as $w) 
-                            <option value="{{ $w->warga_id }}" {{ $kk->kepala_keluarga_warga_id == $w->warga_id ? 'selected':'' }}>
-                                {{ $w->nama }}
+                            <option value="{{ $w->warga_id }}" {{ $keluarga->kepala_keluarga_warga_id == $w->warga_id ? 'selected':'' }}>
+                                {{ $w->nama }} ({{ $w->no_ktp }})
                             </option> 
                         @endforeach
                     </select>
+                    @error('kepala_keluarga_warga_id')<p class="text-red-500 text-sm">{{ $message }}</p>@enderror
                 </div>
                 <div class="md:col-span-2">
                     <label>Alamat</label>
-                    <textarea name="alamat" class="w-full border rounded px-3 py-2">{{ old('alamat', $kk->alamat) }}</textarea>
+                    <textarea name="alamat" class="w-full border rounded px-3 py-2">{{ old('alamat', $keluarga->alamat) }}</textarea>
                 </div>
                 <div>
                     <label>RT</label>
-                    <input name="rt" value="{{ old('rt', $kk->rt) }}" class="w-full border rounded px-3 py-2">
+                    <input name="rt" value="{{ old('rt', $keluarga->rt) }}" class="w-full border rounded px-3 py-2">
                 </div>
                 <div>
                     <label>RW</label>
-                    <input name="rw" value="{{ old('rw', $kk->rw) }}" class="w-full border rounded px-3 py-2">
+                    <input name="rw" value="{{ old('rw', $keluarga->rw) }}" class="w-full border rounded px-3 py-2">
                 </div>
             </div>
 

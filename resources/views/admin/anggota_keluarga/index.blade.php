@@ -18,7 +18,7 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold">List Anggota Keluarga</h2>
 
-            <a href="{{ route('anggota.create') }}"
+            <a href="{{ route('anggota-keluarga.create') }}"
                class="bg-[#6c63ff] hover:bg-[#5a54e6] text-white py-2 px-4 rounded-xl shadow">
                 <i class="fa fa-plus mr-1"></i> Tambah Anggota
             </a>
@@ -46,15 +46,15 @@
                             <td class="p-3 border">{{ $item->hubungan }}</td>
 
                             <td class="p-3 border flex gap-1">
-                                <a href="{{ route('anggota.show', $item) }}" class="bg-blue-500 text-white px-3 py-1 rounded">
+                                <a href="{{ route('anggota-keluarga.show', $item) }}" class="bg-blue-500 text-white px-3 py-1 rounded">
                                     <i class="fa fa-eye"></i> Lihat
                                 </a>
 
-                                <a href="{{ route('anggota.edit', $item) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">
+                                <a href="{{ route('anggota-keluarga.edit', $item) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">
                                     <i class="fa fa-edit"></i> Edit
                                 </a>
 
-                                <form action="{{ route('anggota.destroy', $item) }}" method="POST"
+                                <form action="{{ route('anggota-keluarga.destroy', $item) }}" method="POST"
                                       onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                     @csrf
                                     @method('DELETE')

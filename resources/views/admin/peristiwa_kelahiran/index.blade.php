@@ -29,6 +29,7 @@
                         <td class="p-3">{{ $it->no_akta ?? '-' }}</td>
                         <td class="p-3 flex gap-2">
                             <a href="{{ route('peristiwa_kelahiran.show',$it) }}" class="px-3 py-1 bg-blue-500 text-white rounded">Lihat</a>
+                            <a href="{{ route('peristiwa_kelahiran.edit',$it) }}" class="px-3 py-1 bg-yellow-500 text-white rounded">Edit</a>
                             <form action="{{ route('peristiwa_kelahiran.destroy',$it) }}" method="POST" onsubmit="return confirm('Hapus?')">
                                 @csrf @method('DELETE')
                                 <button class="px-3 py-1 bg-red-500 text-white rounded">Hapus</button>

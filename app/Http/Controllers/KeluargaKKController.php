@@ -2,14 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keluarga_kk;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 
 class KeluargaKKController extends Controller
 {
     public function index(Request $request)
     {
-         $data['dataKeluarga_kk'] = Keluarga_kk::all();
-        return view('admin.keluarga_kk.index', $data);
+        $query = Keluarga_kk::with('kepalaKeluarga');
+        
+        if ($request->search) {
+            $query->where('kk_nomor', 'like', '%' . $request->search . '%')
+                  ->orWhere('alamat', 'like', '%' . $request->search . '%');
+        }
+        
+        if ($request->rt) {
+            $query->where('rt', $request->rt);
+        }
+        
+        if ($request->rw) {
+            $query->where('rw', $request->rw);
+        }
+        
+        $data = $query->orderBy('kk_id', 'desc')->paginate(10);
+        return view('admin.keluarga_kk.index', compact('data'));
     }
 
     /**
@@ -44,8 +61,9 @@ class KeluargaKKController extends Controller
 
     public function edit($id)
     {
-         $data['dataKeluarga_kk'] = Keluarga_kk::findOrFail($id);
-        return view('admin.keluarga_kk.edit', $data);
+        $keluarga = Keluarga_kk::findOrFail($id);
+        $warga = Warga::orderBy('nama')->get();
+        return view('admin.keluarga_kk.edit', compact('keluarga', 'warga'));
     }
 
     public function update(Request $request, $id)
