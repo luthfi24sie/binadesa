@@ -8,18 +8,10 @@ use App\Http\Controllers\PeristiwaKelahiranController;
 use App\Http\Controllers\PeristiwaKematianController;
 use App\Http\Controllers\PeristiwaPindahController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\WargaController;
 use Illuminate\Support\Facades\Route;
 // Duplicate import removed
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/ketua', function () {
-    return view('ketua');
-});
-Route::get('/anggota', function () {
-    return view('anggota');
-});
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 // Resource routes

@@ -11,11 +11,25 @@ class MediaController extends Controller
     /**
      * INDEX
      */
-    public function index()
-    {
-        $media = Media::latest()->paginate(20);
-        return view('admin.media.index', compact('media'));
+    public function index(Request $request)
+{
+    $query = Media::query();
+
+    if ($request->filled('keyword')) {
+        $query->where('caption', 'like', '%' . $request->keyword . '%');
     }
+
+    if ($request->filled('ref_table')) {
+        $query->where('ref_table', $request->ref_table);
+    }
+
+    $media = $query->latest()
+                   ->paginate(20)
+                   ->withQueryString();
+
+    return view('admin.media.index', compact('media'));
+}
+
 
     /**
      * CREATE

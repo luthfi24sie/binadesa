@@ -12,7 +12,6 @@ class ProductController extends Controller
     {
         // server-side pagination Laravel
         $products = Product::latest()->paginate(10);
-
         return view('products.index', compact('products'));
     }
 
@@ -28,12 +27,13 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-
+            
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads', 'public');
-        }
+    $data['image'] = $request->file('image')->store('uploads', 'public');
+}
+
 
         Product::create($data);
 
@@ -57,15 +57,16 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-
+            
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $data['image'] = $request->file('image')->store('uploads', 'public');
-        }
+            if ($request->hasFile('image')) {
+    if ($product->image) {
+        Storage::disk('public')->delete($product->image);
+    }
+    $data['image'] = $request->file('image')->store('uploads', 'public');
+}
+
 
         $product->update($data);
 
@@ -75,7 +76,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-
         return redirect()->route('products.index')->with('success', 'Product deleted.');
     }
 }

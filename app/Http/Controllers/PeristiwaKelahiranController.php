@@ -48,39 +48,14 @@ class PeristiwaKelahiranController extends Controller
 
         PeristiwaKelahiran::create($request->all());
 
-<<<<<<< HEAD
-        return redirect()->route('peristiwa_kelahiran.index')->with('success', 'Data kelahiran dicatat.');
-=======
       return redirect()->route('peristiwa_kelahiran.index')
     ->with('success', 'Data kelahiran dicatat.');
->>>>>>> 868c5c2281305549b0c0e6533856867fd3e5cc09
     }
 
     public function show($id)
     {
         $data = PeristiwaKelahiran::with('warga', 'ayah', 'ibu', 'media')->findOrFail($id);
         return view('admin.peristiwa_kelahiran.show', compact('data'));
-    }
-
-    public function edit($id)
-    {
-        $kelahiran = PeristiwaKelahiran::findOrFail($id);
-        $warga = Warga::orderBy('nama')->get();
-        return view('admin.peristiwa_kelahiran.edit', compact('kelahiran', 'warga'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'warga_id' => 'required',
-            'tgl_lahir' => 'required',
-            'no_akta' => 'required|unique:peristiwa_kelahiran,no_akta,' . $id,
-        ]);
-
-        $kelahiran = PeristiwaKelahiran::findOrFail($id);
-        $kelahiran->update($request->all());
-
-        return redirect()->route('peristiwa_kelahiran.index')->with('success', 'Data kelahiran berhasil diperbarui.');
     }
 
     public function destroy($id)

@@ -7,11 +7,25 @@ use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
-  public function index()
-{
-    $warga = Warga::orderBy('id', 'desc')->paginate(10); // ganti warga_id jadi id
-    return view('warga.index', compact('warga'));
-}
+    public function index(Request $request)
+    {
+        $query = Warga::query();
+
+        // Search
+        if ($request->search) {
+            $query->where('nama', 'like', "%".$request->search."%")
+                ->orWhere('no_ktp', 'like', "%".$request->search."%");
+        }
+
+        // Filter jenis kelamin
+        if ($request->jk) {
+            $query->where('jenis_kelamin', $request->jk);
+        }
+
+        $warga = $query->latest()->paginate(20)->appends($request->all());
+
+        return view('admin.warga.index', compact('warga'));
+    }
 
 
     public function create()
@@ -31,8 +45,7 @@ class WargaController extends Controller
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil ditambahkan.');
     }
 
-
-    public function show(Warga $warga)
+    public function show($id)
     {
         $warga = Warga::findOrFail($id);
         return view('admin.warga.show', compact('warga'));
@@ -44,16 +57,18 @@ class WargaController extends Controller
         return view('admin.warga.edit', compact('warga'));
     }
 
-    public function update(Request $request, Warga $warga)
-{
-    $request->validate([
-        'no_ktp' => 'required|unique:warga,no_ktp,' . $warga->id . ',id', // ganti warga_id jadi id
-        // ... validasi lainnya
-    ]);
+    public function update(Request $request, $id)
+    {
+        $warga = Warga::findOrFail($id);
 
-    $warga->update($request->all());
-    return redirect()->route('warga.index')->with('success', 'Data warga berhasil diperbarui');
-}
+        $request->validate([
+            'no_ktp' => 'required|unique:warga,no_ktp,' . $id . ',warga_id',
+        ]);
+
+        $warga->update($request->all());
+
+        return redirect()->route('warga.index')->with('success', 'Data warga berhasil diupdate.');
+    }
 
     public function destroy($id)
     {
@@ -61,4 +76,3 @@ class WargaController extends Controller
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil dihapus.');
     }
 }
-
