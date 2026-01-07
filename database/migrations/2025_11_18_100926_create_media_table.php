@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('file_url');
             $table->string('caption')->nullable();
             $table->string('mime_type')->nullable();
-            $table->integer('sort_order')->default(0);
+          5456+   $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
     }
